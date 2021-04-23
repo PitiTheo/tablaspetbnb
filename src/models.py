@@ -1,6 +1,6 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -15,41 +15,37 @@ class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     user_name = Column(Integer, nullable=False)
+    birth_date = Column(Integer,unique=True, nullable=False)
+    email = Column(String(30),unique=True, nullable=False)
     password = Column(String(30))
-    
-    
+    id_adress = Column(String(100), unique = False, nullable = False)
+    phone = Column(Integer,unique=True, nullable=False)
+    user_rol = Column(Integer, unique = False, nullable = False)
+    is_active = Column(Boolean(), unique=False, nullable=False)
+
+
 
 class Owner(Base):
     __tablename__ = 'owner'
     id = Column(Integer, primary_key=True)
-    name = Column(String(30))
-    email = Column(String(30), unique=True, nullable=False)
     pet_id = Column(Integer)
+
+class Buddy(Base):
+    __tablename__ = 'buddy'
+    id = Column(Integer, primary_key=True)
+    service = Column(String(30))
    
     
-class Persons(Base):
-    __tablename__ = 'persons'
+class Address(Base):
+    __tablename__ = 'address'
     id = Column(Integer, primary_key=True)
-    name = Column(String(30))
-    height = Column(Integer)
-    mass = Column(String(250))
-    hair_color = Column(String(30))
-    skin_color = Column(String(30))
-    eye_color = Column(String(30))
-    birth_year = Column(Integer)
-    gender = Column(String(30))
+    id_comment = Column(String(200))
+    
 
-class Planets(Base):
-    __tablename__ = 'planets' 
+class Comment(Base):
+    __tablename__ = 'comment'
     id = Column(Integer, primary_key=True)
-    planet_name = Column(String(40))
-    rotation_period = Column(Integer)
-    orbital_period = Column(Integer)
-    diameter = Column(Integer)
-    climate = Column(String(30))
-    gravity = Column(String(30))
-    terrain = Column(String(30))
-    population = Column(Integer)
+    comment_body= Column(String(200))
 
 
     def to_dict(self):
